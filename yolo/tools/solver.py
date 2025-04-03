@@ -9,8 +9,10 @@ from yolo.model.yolo import create_model
 from yolo.tools.data_loader import create_dataloader
 from yolo.tools.drawer import draw_bboxes
 from yolo.tools.loss_functions import create_loss_function
+from yolo.tools.format_converters import strip_prefix
 from yolo.utils.bounding_box_utils import create_converter, to_metrics_format
 from yolo.utils.model_utils import PostProcess, create_optimizer, create_scheduler
+from yolo.utils.logger import logger
 
 
 class BaseModel(LightningModule):
@@ -20,6 +22,10 @@ class BaseModel(LightningModule):
 
     def forward(self, x):
         return self.model(x)
+
+    def on_save_checkpoint(self, checkpoint):
+        # yolo/model/yolo.py:136 - Add compatibility with save_load_weights
+        checkpoint["model_state_dict"] = strip_prefix(self.model.state_dict(), "model.")
 
 
 class ValidateModel(BaseModel):
