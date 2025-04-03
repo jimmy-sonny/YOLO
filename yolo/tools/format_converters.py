@@ -135,3 +135,15 @@ def convert_weight_seg(old_state_dict, new_state_dict):
             print(f"{new_state_dict[new_weight_name].shape} {old_state_dict[old_weight_name].shape}")
         new_state_dict[new_weight_name] = old_state_dict[old_weight_name]
     return new_state_dict
+
+
+def strip_prefix(state_dict, prefix):
+    """Remove prefix from state dict keys."""
+    new_state_dict = {}
+    for key, value in state_dict.items():
+        if key.startswith(prefix):
+            new_key = key[len(prefix):]  # Remove the prefix
+            new_state_dict[new_key] = value
+        else:
+            new_state_dict[key] = value
+    return new_state_dict
