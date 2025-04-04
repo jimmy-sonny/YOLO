@@ -44,6 +44,9 @@ You can customize the training process by overriding the following common argume
 - ``use_TensorBoard``: :guilabel:`bool`
   Whether to use TensorBoard for logging.
 
+- ``use_mlflow``: :guilabel:`bool`
+  Whether to use MlFlow for logging.
+
 - ``image_size``: :guilabel:`int | [int, int]`
   The input image size.
 

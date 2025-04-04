@@ -23,7 +23,7 @@ import wandb
 from lightning import LightningModule, Trainer, seed_everything
 from lightning.pytorch.callbacks import Callback, RichModelSummary, RichProgressBar
 from lightning.pytorch.callbacks.progress.rich_progress import CustomProgress
-from lightning.pytorch.loggers import TensorBoardLogger, WandbLogger
+from lightning.pytorch.loggers import TensorBoardLogger, WandbLogger, MLFlowLogger
 from lightning.pytorch.utilities import rank_zero_only
 from omegaconf import ListConfig
 from rich import get_console, reconfigure
@@ -285,6 +285,8 @@ def setup(cfg: Config):
     progress.append(ImageLogger())
     if cfg.use_tensorboard:
         loggers.append(TensorBoardLogger(log_graph="all", save_dir=save_path))
+    if cfg.use_mlflow:
+        loggers.append(MLFlowLogger(experiment_name="lightning_logs", tracking_uri="file:./ml-runs"))
     if cfg.use_wandb:
         loggers.append(WandbLogger(project="YOLO", name=cfg.name, save_dir=save_path, id=None))
 

@@ -165,6 +165,7 @@ Config
         int lucky_number
         bool use_wandb
         bool use_TensorBoard
+        bool use_mlflow
         Optional~str~ weight
     }
 
